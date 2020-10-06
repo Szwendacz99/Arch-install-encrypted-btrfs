@@ -1,4 +1,4 @@
-# Install Arch Linux with encrypted file-system(optional) and on btrfs partition  (UEFI)
+# Install Arch Linux with encrypted filesystem(optional) and on btrfs partition  (UEFI)
 Official guide: [https://wiki.archlinux.org/index.php/Installation_Guide](https://wiki.archlinux.org/index.php/Installation_Guide)  
 it is always good to consult with official guide, cause arch config might change in time  
   
