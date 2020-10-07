@@ -1,10 +1,11 @@
 # Install Arch Linux with encrypted filesystem(optional) and on btrfs partition  (UEFI)
-Official guide: [https://wiki.archlinux.org/index.php/Installation_Guide](https://wiki.archlinux.org/index.php/Installation_Guide)  
+Official guide for basic install: [https://wiki.archlinux.org/index.php/Installation_Guide](https://wiki.archlinux.org/index.php/Installation_Guide)  
 it is always good to consult with official guide, cause arch config might change in time  
+For setting up different locale than pl check official guide
   
 # 1. Boot ISO
 ### Download the ISO file from [https://www.archlinux.org](https://www.archlinux.org/)  
-### put on pedrive  
+### Put on pedrive  
 >dd if=archlinux.img of=/dev/sdX bs=16M && sync # on linux  
   
 ### Boot from the usb.  
@@ -12,10 +13,10 @@ it is always good to consult with official guide, cause arch config might change
 ### Set keymap  
 >loadkeys pl  
   
-### update clock  
+### Update clock  
 >timedatectl set-ntp true  
   
-### optionally (recommended) update mirrorlist  
+### Optionally (recommended) update mirrorlist  
 >reflector --country 'Poland' --age 24 --verbose --sort rate --save /etc/pacman.d/mirrorlist  
  
  # 2. Prepare Disk
@@ -23,26 +24,26 @@ it is always good to consult with official guide, cause arch config might change
 ### Update btrfs-progs
 >pacman -Syy btrfs-progs  
   
-### display disks setup  
+### Display disks setup  
 >fdisk -l  
   
-### Create partitions (if u have not already)  
+### Create partitions (if you have not already)  
 >fdisk /dev/sdX  
-1. 100MB EFI partition # type code: 1  
+1. 100MB EFI partition 
 2. 100% size partiton # ( encrypted optionally) for BTRFS, this partition will require formatting AFTER encryption if you do encryption  
-### swap will be as file in its own subvolume  
+### Swap will be as file in its own subvolume  
   
 >mkfs.vfat -F32 /dev/sdX1 # EFI partiton formatting is required  
   
 ### ----------------- encryption (optional) ------------------  
   
 ### Setup the encryption of the system, don't use letters outside en-us keyboard like ąęć etc. for password  
-### you can check if grub with encrypted /boot support luks2 format when you are reading it, it coud have changed, but now grub only supports luks1  
+### You can check if grub with encrypted /boot support luks2 format when you are reading it, it coud have changed, but now grub only supports luks1  
 >cryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --use-random luksFormat --type=luks1 /dev/sdX2  
 
 >cryptsetup luksOpen /dev/sdX2 MainPart  
   
-### formatting as btrfs now when it is already encrypted  
+### Formatting as btrfs now when it is already encrypted  
 >mkfs.btrfs -L "Arch Linux" /dev/mapper/MainPart  
   
   
@@ -53,12 +54,12 @@ it is always good to consult with official guide, cause arch config might change
 
 >mkfs.btrfs -L "Arch Linux" /dev/sdX2  
   
-### mount partition to be able to create btrfs subvolumes  
-### if using encryption, change /dev/sdX2 to /dev/mapper/MainPart  
+### Mount partition to be able to create btrfs subvolumes  
+### If using encryption, change /dev/sdX2 to /dev/mapper/MainPart:   
 >mount /dev/sdX2 /mnt  
   
 ## Create subvolumes  
-### Creating using more complicated sheme, (but there actually is only need for separate @swap subvolume , other files can be on pure partition )  
+### Using more complicated sheme, (but there actually is only need for separate @swap subvolume , other files can be on default top subvolume)  
   
 >btrfs su cr /mnt/@  
 
@@ -74,7 +75,7 @@ it is always good to consult with official guide, cause arch config might change
 
 >umount /mnt  
   
-### if using encryption, change /dev/sdX2 to /dev/mapper/MainPart  
+### If using encryption, change /dev/sdX2 to /dev/mapper/MainPart:  
 >mount -o defaults,noatime,discard,ssd,subvol=@ /dev/sdX2 /mnt  
   
 >mkdir /mnt/swap  
@@ -89,9 +90,9 @@ it is always good to consult with official guide, cause arch config might change
 
 >mkdir /mnt/efi # for EFI partition /dev/sdX1  
   
-### if using encryption, change /dev/sdX2 to /dev/mapper/MainPart  
+### If using encryption, change /dev/sdX2 to /dev/mapper/MainPart  
 ### IMPORTANT for swap subvolume add nodatacow option to disable CoW  
-### discard ssd and noatime are for ssd disks only  
+### Discard ssd and noatime are for ssd disks only  
   
 >mount -o defaults,noatime,nodatacow,discard,ssd,subvol=@swap /dev/sdX2 /mnt/swap  
 >mount -o defaults,noatime,discard,ssd,subvol=@home /dev/sdX2 /mnt/home  
@@ -106,23 +107,23 @@ it is always good to consult with official guide, cause arch config might change
 ### Select the mirror to be used if not updated with reflector on start  
 >nano /etc/pacman.d/mirrorlist  
   
-### this command can be customized with additional packages  
+### This command can be customized with additional packages  
 >pacstrap /mnt/ base base-devel git btrfs-progs efibootmgr linux linux-headers linux-firmware mkinitcpio dhcpcd bash-completion sudo  
   
-### use genfstab with -U parameter if no encryption  
+### Use genfstab with -U parameter if no encryption  
 >genfstab /mnt >> /mnt/etc/fstab  
   
-### if using swapfile check if nodatacow is added for @swap  
+### If using swapfile check if nodatacow is added for @swap  
 >nano /mnt/etc/fstab  
   
 
   
 # 4. Configure the system 
   
-  ### switch to installed system root
+### Switch to installed system root user
 >arch-chroot /mnt /bin/bash  
   
-### nano can be usefull when editing config files
+### Nano can be usefull when editing config files
 >pacman -Syy nano  
   
 ### Setup system clock  
@@ -133,35 +134,36 @@ it is always good to consult with official guide, cause arch config might change
 >/etc/hostname  
 >>myhostname 
   
-### edit vconsole  
+### Edit vconsole  
 >/etc/vconsole.conf  
 >>KEYMAP=pl  
 >>FONT=Lat2-Terminus16.psfu.gz  
 >>FONT_MAP=8859-2  
   
-### setup locale  
-### uncomment pl_PL.UTF-8 in /etc/locale.gen and then:  
+### Setup locale  
+### Uncomment pl_PL.UTF-8 in /etc/locale.gen and then:  
 >locale-gen  
   
-### update locale  
->echo LANG=pl_PL.UTF-8 >> /etc/locale.conf  
->echo LC_ALL=pl_PL.UTF-8 >> /etc/locale.conf  
+### Update locale  
+>/etc/locale.conf  
+>>LANG=pl_PL.UTF-8  
+>>LC_ALL=pl_PL.UTF-8
   
-### hosts 
+### Hosts 
 >/etc/hosts  
 >>127.0.0.1 localhost  
 >>::1 localhost  
 >>127.0.1.1 myhostname.localdomain myhostname  
   
-### now create 4GiB swap file. nodatacow is already (or should be) on @swap subvolume but it is recommended to disable cow for file :  
+### Now create 4GiB swap file. nodatacow is already (or should be) on @swap subvolume but it is recommended to disable cow for file :  
 >touch /swap/swapfile  
-### check if C attribute is enabled with 
+### Check if C attribute is enabled with 
 >lsattr /swap/swapfile'
 
-### if not then disable COW for swapfile manually: 
+### If not then disable COW for swapfile manually: 
 >chattr +C /swap/swapfile  
   
-### expanding empty file to 4GiB swap file  
+### Expanding empty file to 4GiB swap file  
 >dd if=/dev/zero of=/swap/swapfile bs=1024K count=4096  
   
 >chmod 600 /swap/swapfile  
@@ -185,13 +187,13 @@ it is always good to consult with official guide, cause arch config might change
   
 ### Configure mkinitcpio with modules needed for the initrd image  
 >nano /etc/mkinitcpio.conf  
-### remove 'fsck' and add 'encrypt', 'keyboard', 'keymap' and 'btrfs' to HOOKS before filesystems  
-### if no encryption then only remove fsck and add on that place btrfs  
+### Remove 'fsck' and add 'encrypt', 'keyboard', 'keymap' and 'btrfs' to HOOKS before filesystems  
+### If no encryption then only remove fsck and add on that place btrfs  
 >HOOKS=(... keyboard keymap block encrypt btrfs ... filesystems ...)  
   
 ###### optionally add BINARIES=(/usr/bin/btrfs) for rescue?  
   
-### Regenerate initrd image  
+### Regenerate initrd images  
 >mkinitcpio -P  
   
   # 5. Install bootloader
@@ -202,28 +204,29 @@ it is always good to consult with official guide, cause arch config might change
   
 ### -------------encryption only---------------------  
 >nano /etc/default/grub  
->GRUB_ENABLE_CRYPTODISK=y  
-### find UUID of crypto partition so we can add it to grub config  
+>>GRUB_ENABLE_CRYPTODISK=y  
+### Find UUID of crypto partition so we can add it to grub config  
 >blkid  
-### now set this line including proper UUID:  
->GRUB_CMDLINE_LINUX="cryptdevice=UUID=<MainPart-UUID>:MainPart:allow-discards  
+### Now set this line including proper UUID:
+>/etc/default/grub 
+>>GRUB_CMDLINE_LINUX="cryptdevice=UUID=<MainPart-UUID>:MainPart:allow-discards  
 ### allow-discards is only for ssd  
   
-### generate key so grub dons ask twice for password on boot  
+### Generate key so grub dons ask twice for password on boot  
 >dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock  
 >chmod 600 /crypto_keyfile.bin  
 >chmod 600 /boot/initramfs-linux*  
 >cryptsetup luksAddKey /dev/sdX2 /crypto_keyfile.bin  
-### if you change name of key file there is need to add kernel parameter like cryptkey=rootfs:path  
-### crypto_keyfile.bin is the default name that kernel will guess anyway  
-### now add this file to mkinitcpio.conf  
->nano /etc/mkinitcpio.conf  
+### If you change name of key file there is need to add kernel parameter like cryptkey=rootfs:path  
+### Crypto_keyfile.bin is the default name that kernel will guess anyway  
+### Now add this file to mkinitcpio.conf  
+>/etc/mkinitcpio.conf  
 >>FILES=(/crypto_keyfile.bin)  
   
 >mkinitcpio -P  
 ### -------------encryption end---------------------  
   
-### install
+### Install
 >grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB  
 >grub-mkconfig -o /boot/grub/grub.cfg  
   
@@ -239,7 +242,7 @@ it is always good to consult with official guide, cause arch config might change
 ### or  
 >shutdown now  
   
-## addtitional tips
-### to get proper locale and keymap, check:  
+## Addtitional tips
+### To get proper locale and keymap, check:  
 >localectl status  
-### on KDE plasma , also set settings > ... > keyboard layout && regional settings
+### On KDE plasma , also set settings > ... > keyboard layout && regional settings
