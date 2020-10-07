@@ -95,10 +95,15 @@ For setting up different locale than pl check official guide
 ### Discard ssd and noatime are for ssd disks only  
   
 >mount -o defaults,noatime,nodatacow,discard,ssd,subvol=@swap /dev/sdX2 /mnt/swap  
+
 >mount -o defaults,noatime,discard,ssd,subvol=@home /dev/sdX2 /mnt/home  
+
 >mount -o defaults,noatime,discard,ssd,subvol=@var /dev/sdX2 /mnt/var  
+
 >mount -o defaults,noatime,discard,ssd,subvol=@tmp /dev/sdX2 /mnt/tmp  
+
 >mount -o defaults,noatime,discard,ssd,subvol=@snapshots /dev/sdX2 /mnt/snapshots  
+
 >mount /dev/sdX1 /mnt/efi  
   
   
