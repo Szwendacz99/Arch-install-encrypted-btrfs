@@ -133,6 +133,7 @@ For setting up different locale than pl check official guide
   
 ### Setup system clock  
 >ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime  
+
 >hwclock --systohc --utc  
   
 ### Set the hostname  
