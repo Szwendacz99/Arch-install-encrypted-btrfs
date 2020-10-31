@@ -161,7 +161,7 @@ For setting up different locale than pl check official guide
 >>::1 localhost  
 >>127.0.1.1 myhostname.localdomain myhostname  
   
-### Now create 4GiB swap file. nodatacow is already on @swap but if you follow exactly then @swap is on same partition as other subvolumes and then nodatacow will not work for whole subvolume and then you need to disavle CoW manualy :  
+### Now create 4GiB swap file. nodatacow is already on @swap but if you follow exactly then @swap is on same partition as other subvolumes and nodatacow will not work for whole subvolume so you need to disavle CoW manualy :  
 >touch /swap/swapfile  
 ### Check if C attribute is enabled with 
 >lsattr /swap/swapfile'
