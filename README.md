@@ -89,9 +89,12 @@ For setting up different locale than pl check official guide
 >mkdir /mnt/snapshots  
 
 >mkdir /mnt/efi # for EFI partition /dev/sdX1  
+
+## disable copy on write on var
+>chattr +C /mnt/var
   
 ### If using encryption, change /dev/sdX2 to /dev/mapper/MainPart  
-### IMPORTANT for swap subvolume add nodatacow option to disable CoW  
+### for swap subvolume add nodatacow option to disable CoW (works only if its separate partition)
 ### Discard ssd and noatime are for ssd disks only  
   
 >mount -o defaults,noatime,nodatacow,discard,ssd,subvol=@swap /dev/sdX2 /mnt/swap  
