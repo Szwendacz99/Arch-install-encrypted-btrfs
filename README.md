@@ -38,8 +38,8 @@ For setting up different locale than pl check official guide
 ### ----------------- encryption (optional) ------------------  
   
 ### Setup the encryption of the system, don't use letters outside en-us keyboard like ąęć etc. for password  
-### Grub have partial support for luks2 now, but can handle only pbkdf2
->cryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --pbkdf=pbkdf2 --use-random luksFormat --type=luks2 /dev/sdX2  
+### Grub have some kind of support for luks2 now but still cannot decrypt luks2, so specify luks1 for now
+>cryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --pbkdf=pbkdf2 --use-random luksFormat --type=luks1 /dev/sdX2  
 
 >cryptsetup luksOpen /dev/sdX2 MainPart  
   
@@ -221,7 +221,7 @@ For setting up different locale than pl check official guide
 ### Now set this line including proper UUID in place of "\<device-UUID>":
 #### (temporarly you can use /dev/sdX2 in place of UUID and change it later easy in gui mode)
 >/etc/default/grub 
->>GRUB_CMDLINE_LINUX="cryptdevice=UUID=\<device-UUID>:MainPart:allow-discards  
+>>GRUB_CMDLINE_LINUX="cryptdevice=UUID=\<device-UUID>:MainPart:allow-discards"  
 ### allow-discards is only for ssd  
   
 ### Generate key so grub don't ask twice for password on boot  
