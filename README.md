@@ -74,6 +74,10 @@ For setting up different locale than pl check official guide
 
 >btrfs su cr /mnt/@snapshots  
 
+#### disable copy on write on var and tmp
+>chattr +C /mnt/@var
+>chattr +C /mnt/@tmp
+
 >umount /mnt  
   
 ### If using encryption, change /dev/sdX2 to /dev/mapper/MainPart:  
@@ -90,9 +94,6 @@ For setting up different locale than pl check official guide
 >mkdir /mnt/snapshots  
 
 >mkdir /mnt/efi # for EFI partition /dev/sdX1  
-
-## disable copy on write on var
->chattr +C /mnt/var
   
 ### If using encryption, change /dev/sdX2 to /dev/mapper/MainPart  
 ### for swap subvolume add nodatacow option to disable CoW (works only if its separate partition)
