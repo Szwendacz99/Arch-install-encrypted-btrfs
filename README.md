@@ -39,7 +39,8 @@ For setting up different locale than pl check official guide
   
 ### Setup the encryption of the system, don't use letters outside en-us keyboard like ąęć etc. for password  
 ### Grub should now support luks2
->cryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --pbkdf=argon2id --pbkdf-parallel=4 --use-random luksFormat --type=luks2 /dev/sdX2  
+## pbkdf-memory is given in KB, and here it is about 4GiB (it is maximum amount allowed by cryptsetup, check if you have enaugh RAM)
+>ccryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --pbkdf=argon2id --pbkdf-parallel=4 --pbkdf-memory=4194304 --use-random luksFormat --type=luks2 /dev/sdX2  
 
 >cryptsetup luksOpen /dev/sdX2 MainPart  
   
