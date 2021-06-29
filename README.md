@@ -221,7 +221,7 @@ For setting up different locale than pl check official guide
 >blkid  
 ### Now set this line including proper UUID in place of "UUID":
 >/etc/default/grub 
->>GRUB_CMDLINE_LINUX="cryptdevice=UUID=<MainPart-UUID>:MainPart:allow-discards  
+>>GRUB_CMDLINE_LINUX="cryptdevice=UUID:MainPart:allow-discards  
 ### allow-discards is only for ssd  
   
 ### Generate key so grub dons ask twice for password on boot  
