@@ -217,7 +217,7 @@ For setting up different locale than pl check official guide
 ### -------------encryption only---------------------  
 >nano /etc/default/grub  
 >>GRUB_ENABLE_CRYPTODISK=y  
-### Find UUID of crypto partition so we can add it to grub config  
+### Find UUID (PARTUUID for /dev/sdX2) of crypto partition so we can add it to grub config  
 >blkid  
 ### Now set this line including proper UUID in place of "UUID":
 >/etc/default/grub 
