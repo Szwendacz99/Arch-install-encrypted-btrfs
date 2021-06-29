@@ -219,7 +219,7 @@ For setting up different locale than pl check official guide
 >>GRUB_ENABLE_CRYPTODISK=y  
 ### Find UUID of crypto partition so we can add it to grub config  
 >blkid  
-### Now set this line including proper UUID in place of MainPart:
+### Now set this line including proper UUID in place of "UUID":
 >/etc/default/grub 
 >>GRUB_CMDLINE_LINUX="cryptdevice=UUID=<MainPart-UUID>:MainPart:allow-discards  
 ### allow-discards is only for ssd  
