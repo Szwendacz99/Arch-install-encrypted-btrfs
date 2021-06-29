@@ -199,7 +199,7 @@ For setting up different locale than pl check official guide
   
 ### Configure mkinitcpio with modules needed for the initrd image  
 >nano /etc/mkinitcpio.conf  
-### Remove 'fsck' and add 'encrypt', 'keyboard', 'keymap' and 'btrfs' to HOOKS before filesystems  
+### Remove 'fsck' and add 'keyboard', 'keymap', 'encrypt' and 'btrfs' to HOOKS before filesystems  
 ### If no encryption then only remove fsck and add on that place btrfs  
 >HOOKS=(... keyboard keymap block encrypt btrfs ... filesystems ...)  
   
