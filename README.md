@@ -38,8 +38,8 @@ For setting up different locale than pl check official guide
 ### ----------------- encryption (optional) ------------------  
   
 ### Setup the encryption of the system, don't use letters outside en-us keyboard like ąęć etc. for password  
-### You can check if grub with encrypted /boot support luks2 format when you are reading it, it coud have changed, but now grub only supports luks1  
->cryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --use-random luksFormat --type=luks1 /dev/sdX2  
+### Grub should now support luks2
+>cryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --pbkdf=argon2id --pbkdf-parallel=4 --use-random luksFormat --type=luks2 /dev/sdX2  
 
 >cryptsetup luksOpen /dev/sdX2 MainPart  
   
