@@ -224,7 +224,7 @@ For setting up different locale than pl check official guide
 >>GRUB_CMDLINE_LINUX="cryptdevice=UUID:MainPart:allow-discards  
 ### allow-discards is only for ssd  
   
-### Generate key so grub dons ask twice for password on boot  
+### Generate key so grub don't ask twice for password on boot  
 >dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock  
 >chmod 600 /crypto_keyfile.bin  
 >chmod 600 /boot/initramfs-linux*  
