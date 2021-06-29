@@ -74,9 +74,9 @@ For setting up different locale than pl check official guide
 >btrfs su cr /mnt/@snapshots  
 
 #### disable copy on write on var, tmp and swap
->chattr +C /mnt/@var
->chattr +C /mnt/@tmp
->chattr +C /mnt/@swap
+>chattr +C /mnt/@var  
+>chattr +C /mnt/@tmp  
+>chattr +C /mnt/@swap  
 
 >umount /mnt  
   
