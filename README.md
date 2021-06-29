@@ -219,7 +219,7 @@ For setting up different locale than pl check official guide
 ### Find UUID (PARTUUID for /dev/sdX2) of crypto partition so we can add it to grub config  
 >blkid  
 ### Now set this line including proper UUID in place of "\<device-UUID>":
-#### (temporarly you can use /dev/sdX2 in place of UUID and change it later easy in gui mode)
+#### (temporarly you can use /dev/sdX2 in place of "UUID=\<device-UUID>" and change it later easy in gui mode)
 >/etc/default/grub 
 >>GRUB_CMDLINE_LINUX="cryptdevice=UUID=\<device-UUID>:MainPart:allow-discards"  
 ### allow-discards is only for ssd  
