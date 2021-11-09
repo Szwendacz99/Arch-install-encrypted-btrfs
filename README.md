@@ -161,8 +161,9 @@ pacman -Syy nano
 ### Setup system clock  
 ```bash
 ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime  
+
+hwclock --systohc --utc  
 ```
->hwclock --systohc --utc  
   
 ### Set the hostname in `/etc/hostname`
 ```test
