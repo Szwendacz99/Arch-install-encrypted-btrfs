@@ -213,12 +213,6 @@ genfstab /mnt >> /mnt/etc/fstab
 arch-chroot /mnt /bin/bash
 ```
 
-#### Nano can be usefull when editing config files
-
-```bash
-pacman -Syy nano
-```
-
 #### Setup system clock
 
 ```bash
