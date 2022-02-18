@@ -267,10 +267,10 @@ LC_TIME=pl_PL.UTF-8
 
 #### Now create empty (with 0 size) swap file:
 
-#### Create separate folder for swapfile. This folder is needed to let you make snapshot of `/`, which would not be possible with any file in it with CoW disabled!
+#### Create separate subvolume for swapfile. This subvolume is needed to let you make snapshot of `/`, which would not be possible with any file in it with CoW disabled!
 
 ```
-mkdir /swap
+btrfs su create /swap
 
 chattr +C /swap
 ```
